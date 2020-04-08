@@ -42,14 +42,15 @@ export function draw(chartObj: IlineChart) {
       },
       scales: {
         xAxes: [{
-          type: 'time',
-          offset: false,
-          time: { unit: 'hour' },
+          //type: 'linear',
+          // offset: true,
+          //time: {
+          // unit: 'hour'
+          //},
           scaleLabel: {
             display: true,
             labelString: "Normal low temp range",
             fontSize: 10,
-            // padding: 2,
           },
           ticks: {
             max: 24,
@@ -60,17 +61,16 @@ export function draw(chartObj: IlineChart) {
             lineWidth: 2,
             drawBorder: true,
             borderDash: [0, 2],
-            offsetGridLines: true
+            offsetGridLines: false
           },
         }],
         yAxes: [{
           type: 'linear',
-          position: 'left',
+          offset: true,
           scaleLabel: {
             display: true,
             labelString: "",
             fontSize: 10,
-            // padding: 2,
           },
           ticks: {
             min: 68,
@@ -80,8 +80,8 @@ export function draw(chartObj: IlineChart) {
             display: true,
             lineWidth: 2,
             drawBorder: true,
-            borderDash: [0, 2],
-            offsetGridLines: true
+            borderDash: [1, 2],
+            offsetGridLines: false
           },
         }]
       }

@@ -9,19 +9,14 @@ import * as moment from 'moment';
   styleUrls: ['./chartbasic.component.scss']
 })
 export class ChartbasicComponent implements OnInit {
-  // current Date + Time
-  m = moment();
-  m1 = moment('01/02/2020');
-  m2 = this.m;
-  maxTemp: number = 105;
-  // minTemp: number = 65;
-  unitOfMeasure: string = ''
 
-  elapsed = moment.duration(this.m2.diff(this.m1)).asHours()
+  unitOfMeasure: string;
+  maxTemp: number = 105;
+
 
   lineChart: IlineChart = {
-    labels: this.generateLabels(this.elapsed),   // elassed time hrs
-    data: this.generateSeries(this.maxTemp),
+    labels: this.generateLabels(),
+    data: this.generateSeries(),
     title: 'Normal high temp range',
     type: 'line',
     unit: this.unitOfMeasure
@@ -33,11 +28,18 @@ export class ChartbasicComponent implements OnInit {
     ch.draw(this.lineChart);
   }
 
-  generateLabels(num: number): string[] {
-    let labels = []
-    if (num) {
-      for (let i = 0; i < num; i++) {
-        labels[i] = i
+  generateLabels(): string[] {
+
+    let labels = [];
+    let m = moment();
+    let m1 = moment('04/07/2020 04:47');
+
+    let elapsed = moment.duration(m.diff(m1)).asHours();
+
+    if (elapsed) {
+      for (let i = 0; i < elapsed; i++) {
+        console.log(elapsed)
+        labels[i] = i.toString()
       }
       return [...labels];
     }
@@ -45,11 +47,13 @@ export class ChartbasicComponent implements OnInit {
   }
 
 
-  generateSeries(num: number): number[] {
+  generateSeries(): number[] {
+    let maxTemp: number = 105;
+
     let labels: number[] = [];
 
-    if (num) {
-      for (let i = 0; i < num; i++) {
+    if (maxTemp) {
+      for (let i = 0; i < maxTemp; i++) {
         labels[i] = i * (Math.floor(Math.random() * 105)) / 100;
       }
       return [...labels].filter((l) => l > this.convertFah(20));

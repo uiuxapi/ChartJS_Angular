@@ -16,13 +16,28 @@ export function draw(chartObj: IlineChart) {
       labels: chartObj.labels,
       datasets: [{
         label: chartObj.title,
-        backgroundColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgb(255, 99, 132)',
+        borderWidth: 3,
+        borderDash: [0.5],       // 30 min
         data: chartObj.data
       }]
     },
-
     // Configuration options go here
-    options: {}
+    options: {
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: 'Temperature Chart',
+        fontSize: 16
+      },
+      legend: {
+        display: true,
+        position: 'top'
+      }
+    }
   });
+
+  //Chart.defaults.line.showLines = false;
+
 }

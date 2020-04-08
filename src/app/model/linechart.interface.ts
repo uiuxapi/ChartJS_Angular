@@ -3,4 +3,5 @@ export interface IlineChart {
   data: number[];
   title: string;
   type: string;
+  unit: string;
 }

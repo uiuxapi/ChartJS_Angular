@@ -11,17 +11,20 @@ import * as moment from 'moment';
 export class ChartbasicComponent implements OnInit {
   // current Date + Time
   m = moment();
-  m1 = moment('04/06/2020');
+  m1 = moment('01/02/2020');
   m2 = this.m;
   maxTemp: number = 105;
+  // minTemp: number = 65;
+  unitOfMeasure: string = ''
 
   elapsed = moment.duration(this.m2.diff(this.m1)).asHours()
 
   lineChart: IlineChart = {
     labels: this.generateLabels(this.elapsed),   // elassed time hrs
     data: this.generateSeries(this.maxTemp),
-    title: 'Temperature Chart',
+    title: 'Normal high temp range',
     type: 'line',
+    unit: this.unitOfMeasure
   }
 
   // constructor() { }
@@ -47,25 +50,25 @@ export class ChartbasicComponent implements OnInit {
 
     if (num) {
       for (let i = 0; i < num; i++) {
-        labels[i] = i * (Math.floor(Math.random() * 104)) / 100;
+        labels[i] = i * (Math.floor(Math.random() * 105)) / 100;
       }
-      return [...labels].filter((l) => l > 65);
+      return [...labels].filter((l) => l > this.convertFah(20));
     }
     return [];
   }
 
   toggle(chart: any) {
-    if (chart.data.datasets[0].label == 'Temperature Chart') {
+    if (chart.data.datasets[0].label == 'Wafer Temperature Reading') {
       //
       chart.data.datasets[0].data = this.lineChart.data;
-      chart.data.datasets[0].label = 'Wafer Temperature';
+      chart.data.datasets[0].label = 'Normal high temp range';
       chart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 0.2)';
       chart.data.datasets[0].backgroundColor = 'rgb(255, 99, 132)';
       chart.options.title.text = ['Wafer Temperature over 7 days'];
     } else {
       // else...
       chart.data.datasets[0].data = this.lineChart.data;
-      chart.data.datasets[0].label = 'Wafer Temperature';
+      chart.data.datasets[0].label = 'Normal low temp range';
       chart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 0.2)';
       chart.data.datasets[0].backgroundColor = 'rgb(255, 99, 132)';
       chart.options.title.text = ['Wafer Temperature over 24 hours'];
@@ -73,10 +76,12 @@ export class ChartbasicComponent implements OnInit {
   }
 
   convertFah(numCel: number) {      // C° TO F°
+    this.unitOfMeasure = 'fahrenheit';
     return (numCel * 1.8) + 32;
   }
 
   convertCel(numFah: number) {     //  F° TO C°
+    this.unitOfMeasure = 'celsius';
     return (numFah - 32) * .5556;
   }
 

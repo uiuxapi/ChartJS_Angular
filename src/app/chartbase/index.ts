@@ -1,4 +1,5 @@
 import * as Chart from 'chart.js';
+import * as moment from 'moment';
 import { IlineChart } from '../model/linechart.interface';
 
 
@@ -15,29 +16,76 @@ export function draw(chartObj: IlineChart) {
     data: {
       labels: chartObj.labels,
       datasets: [{
-        label: chartObj.title,
+        label: chartObj.unit,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 3,
         borderDash: [0.5],       // 30 min
+        pointHoverBackgroundColor: 'white',
+        spanGaps: true,
         data: chartObj.data
       }]
     },
-    // Configuration options go here
     options: {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: 'Temperature Chart',
-        fontSize: 16
+        text: chartObj.title,
+        fontSize: 10
       },
       legend: {
-        display: true,
-        position: 'top'
+        display: false,
+        position: 'top',
+        labels: {
+          fontColor: '#cecece',
+        }
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          offset: false,
+          time: { unit: 'hour' },
+          scaleLabel: {
+            display: true,
+            labelString: "Normal low temp range",
+            fontSize: 10,
+            // padding: 2,
+          },
+          ticks: {
+            max: 24,
+            min: 0
+          },
+          gridLines: {
+            display: true,
+            lineWidth: 2,
+            drawBorder: true,
+            borderDash: [0, 2],
+            offsetGridLines: true
+          },
+        }],
+        yAxes: [{
+          type: 'linear',
+          position: 'left',
+          scaleLabel: {
+            display: true,
+            labelString: "",
+            fontSize: 10,
+            // padding: 2,
+          },
+          ticks: {
+            min: 68,
+            max: 105
+          },
+          gridLines: {
+            display: true,
+            lineWidth: 2,
+            drawBorder: true,
+            borderDash: [0, 2],
+            offsetGridLines: true
+          },
+        }]
       }
     }
   });
-
-  //Chart.defaults.line.showLines = false;
 
 }
